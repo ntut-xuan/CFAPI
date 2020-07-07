@@ -1,16 +1,21 @@
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-import cfapi.main.CodeForcesContest;
-import cfapi.main.CodeForcesContestData;
+import cfapi.main.*;
+import org.jsoup.nodes.Document;
 
 public class Example {
-	
+
 	public static void main(String[] args) throws IOException {
-		CodeForcesContest cf = new CodeForcesContest();
-		List<CodeForcesContestData> list = cf.getBeforeContest(false);
-		for(CodeForcesContestData data : list) {
-			System.out.println(data.getName());
+		CodeForcesProblemSet problemSet = new CodeForcesProblemSet();
+		Document doc = problemSet.getDoc();
+		String text = doc.text();
+		List<CodeForcesProblemData> list = CodeForcesProblemSet.make(text);
+		for(CodeForcesProblemData problemData : list){
+			System.out.println(problemData.getName() + " " + problemData.getRating());
 		}
 	}
 
