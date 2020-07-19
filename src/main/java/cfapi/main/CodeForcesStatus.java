@@ -45,13 +45,14 @@ public class CodeForcesStatus {
             }
             String index = problem.get("index").getAsString();
             String verdict = object.get("verdict").getAsString();
+            long creationTime = object.get("creationTimeSeconds").getAsLong();
             String rating = "";
             if (problem.get("rating") == null) {
                 rating = "0";
             } else {
                 rating = problem.get("rating").getAsString();
             }
-            CodeForcesSubmissionData codeForcesSubmissionData = new CodeForcesSubmissionData(contestID, index, rating, verdict);
+            CodeForcesSubmissionData codeForcesSubmissionData = new CodeForcesSubmissionData(contestID, index, rating, verdict, creationTime);
             list.add(codeForcesSubmissionData);
         }
         return list;

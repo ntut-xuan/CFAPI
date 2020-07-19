@@ -14,16 +14,9 @@ import com.google.gson.JsonParser;
 
 public class CodeForcesUser {
 
-	String[] StringDataKey = { "handle", "email", "vkId", "openId", "firstName", "lastName", "country", "city",
-			"organization", "rank	", "maxRank" };
-	String[] StringDataValue = new String[11];
-
-	String[] LongIntegerDataKey = { "contribution", "rating", "maxRating", "lastOnlineTimeSeconds",
-			"registrationTimeSeconds", "friendOfCount" };
-	long[] LongIntegerValue = new long[6];
-
-	String[] URLDataKey = { "avatar", "titlePhoto" };
-	URL[] URLDataValue = new URL[2];
+	String handle, country, city, organization, rank, maxRank;
+	long rating, maxRating;
+	URL titlePhoto;
 
 	public CodeForcesUser(String name) throws IOException, NoUserException {
 		String url = "http://codeforces.com/api/user.info?handles=";
@@ -34,6 +27,7 @@ public class CodeForcesUser {
 		try {
 			doc = connection.get();
 		} catch (HttpStatusException e) {
+			e.printStackTrace();
 			throw new NoUserException("Cannot find such as user.");
 		}
 		String text = doc.text();
@@ -42,107 +36,71 @@ public class CodeForcesUser {
 		String status = object.get("status").getAsString();
 		if (status.equals("FAILED"))
 			throw new NoUserException("Cannot find such as user.");
+
 		JsonObject result = object.get("result").getAsJsonArray().get(0).getAsJsonObject();
-		for (int i = 0; i < StringDataValue.length; i++) {
-			JsonElement subElement = result.get(StringDataKey[i]);
-			if (subElement == null) {
-				StringDataValue[i] = null;
-			} else {
-				StringDataValue[i] = result.get(StringDataKey[i]).getAsString();
-			}
-		}
-		for (int i = 0; i < LongIntegerDataKey.length; i++) {
-			JsonElement subElement = result.get(LongIntegerDataKey[i]);
-			if (subElement == null) {
-				LongIntegerValue[i] = 0;
-			} else {
-				LongIntegerValue[i] = result.get(LongIntegerDataKey[i]).getAsLong();
-			}
-		}
-		for (int i = 0; i < URLDataKey.length; i++) {
-			JsonElement subElement = result.get(URLDataKey[i]);
-			if (subElement == null) {
-				URLDataValue[i] = null;
-			} else {
-				URLDataValue[i] = new URL("https:" + result.get(URLDataKey[i]).getAsString());
-			}
-		}
+		JsonElement handleObject = result.get("handle");
+		JsonElement countryObject = result.get("country");
+		JsonElement cityObject = result.get("city");
+		JsonElement organizationObject = result.get("organization");
+		JsonElement maxRatingObject = result.get("maxRating");
+		JsonElement maxRankObject = result.get("maxRank");
+		JsonElement ratingObject = result.get("rating");
+		JsonElement rankObject = result.get("rank");
+		JsonElement titlePhotoObject = result.get("titlePhoto");
+
+		handle = handleObject == null ? "Unknown" : handleObject.getAsString();
+		country = countryObject == null ? "Unknown" : countryObject.getAsString();
+		city = cityObject == null ? "Unknown" : cityObject.getAsString();
+		organization = organizationObject == null ? "Unknown" : organizationObject.getAsString();
+		maxRating = maxRatingObject == null ? -1L : maxRatingObject.getAsLong();
+		maxRank = maxRankObject == null ? "Unrated" : maxRankObject.getAsString();
+		rating = ratingObject == null ? -1L : ratingObject.getAsLong();
+		rank = rankObject == null ? "Unrated" : rankObject.getAsString();
+		titlePhoto = titlePhotoObject == null ? null : new URL("http:" + titlePhotoObject.getAsString());
+
+		handle = handle.equals("")  ? "Unknwon" : handle;
+		country = country.equals("") ? "Unknown" : country;
+		city = city.equals("") ? "Unknown" : city;
+		organization = organization.equals("") ? "Unknown" : organization;
+		maxRank = maxRank.equals("") ? "Unknown" : maxRank;
+		rank = rank.equals("") ? "Unknown" : rank;
+
 	}
 
 	public String getHandle() {
-		return StringDataValue[0];
-	}
-
-	public String getEmail() {
-		return StringDataValue[1];
-	}
-
-	public String getVKID() {
-		return StringDataValue[2];
-	}
-
-	public String getOpenID() {
-		return StringDataValue[3];
-	}
-
-	public String getFirstName() {
-		return StringDataValue[4];
-	}
-
-	public String getLastName() {
-		return StringDataValue[5];
+		return handle;
 	}
 
 	public String getCountry() {
-		return StringDataValue[6];
+		return country;
 	}
 
 	public String getCity() {
-		return StringDataValue[7];
+		return city;
 	}
 
 	public String getOrganization() {
-		return StringDataValue[8];
+		return organization;
 	}
 
 	public String getRank() {
-		return StringDataValue[9];
+		return rank;
 	}
 
 	public String getMaxRank() {
-		return StringDataValue[10];
-	}
-
-	public long getContribution() {
-		return LongIntegerValue[0];
+		return maxRank;
 	}
 
 	public long getRating() {
-		return LongIntegerValue[1];
+		return rating;
 	}
 
 	public long getMaxRating() {
-		return LongIntegerValue[2];
-	}
-
-	public long getLastOnlineTimeSeconds() {
-		return LongIntegerValue[3];
-	}
-
-	public long getRegistrationTimeSeconds() {
-		return LongIntegerValue[4];
-	}
-
-	public long getFriendOfCount() {
-		return LongIntegerValue[5];
-	}
-
-	public URL getAvaterURL() {
-		return URLDataValue[0];
+		return maxRating;
 	}
 
 	public URL getTitlePhotoURL() {
-		return URLDataValue[1];
+		return titlePhoto;
 	}
 
 }
