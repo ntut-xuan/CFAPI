@@ -21,7 +21,7 @@ public class CodeForcesStatus {
 
     public CodeForcesStatus(String user) throws IOException {
         this.user = user;
-        String url = "https://codeforces.com/api/user.status?handle=" + user;
+        String url = "https://codeforces.com/api/user.status?count=10000&from=1&handle=" + user;
         doc = Jsoup.connect(url).ignoreContentType(true).maxBodySize(0).get();
     }
 
