@@ -1,5 +1,8 @@
 package cfapi.main;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -44,9 +47,9 @@ public class CodeForcesSubmissionData {
     }
 
     public String getTime(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(creationTime * 1000);
-        return sdf.format(date);
+        DateTime dateTime = new DateTime(creationTime * 1000);
+        dateTime = dateTime.withZone(DateTimeZone.forID("Asia/Taipei"));
+        return dateTime.toString("yyyy-MM-dd");
     }
 
 }
