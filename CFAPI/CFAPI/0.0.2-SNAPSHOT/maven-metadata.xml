@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>CFAPI</groupId>
+  <artifactId>CFAPI</artifactId>
+  <versioning>
+    <lastUpdated>20241201042845</lastUpdated>
+    <snapshot>
+      <timestamp>20241201.042845</timestamp>
+      <buildNumber>2</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.2-20241201.042845-2</value>
+        <updated>20241201042845</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.2-20241201.042845-2</value>
+        <updated>20241201042845</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>0.0.2-SNAPSHOT</version>
+</metadata>
